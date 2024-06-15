@@ -1,10 +1,7 @@
-name: CI/CD Pipeline
+name: Build and Deploy
 
 on:
-  push:
-    branches:
-      - master
-      - develop
+  [push]
 
 env:
   DOCKER_DRIVER: overlay2
