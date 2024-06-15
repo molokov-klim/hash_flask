@@ -1,10 +1,9 @@
 name: Build and Deploy
 
-on:
-  [push]
+on: [push]
 
 env:
-  DOCKER_DRIVER: overlay2
+  #DOCKER_DRIVER: overlay2
   CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
   CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
   SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -34,22 +33,22 @@ jobs:
         env:
           CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
           CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
-    needs: build
-
-    steps:
-      - name: Install sshpass
-        run: sudo apt-get update && sudo apt-get install -y sshpass
-
-      - name: Deploy to server
-        run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-          docker login -u '${{ secrets.CI_REGISTRY_USER }}' -p '${{ secrets.CI_REGISTRY_PASSWORD }}'
-          docker pull klementus/${{ env.CI_PROJECT_NAME }}:latest
-          docker stop flask || true
-          docker rm flask || true
-          docker run -d -p 8080:8080 --name flask klementus/${{ env.CI_PROJECT_NAME }}:latest
-          docker rmi -f \$(docker images -f 'dangling=true' -q)"
+#
+#  deploy:
+#    runs-on: ubuntu-latest
+#    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+#    needs: build
+#
+#    steps:
+#      - name: Install sshpass
+#        run: sudo apt-get update && sudo apt-get install -y sshpass
+#
+#      - name: Deploy to server
+#        run: |
+#          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+#          docker login -u '${{ secrets.CI_REGISTRY_USER }}' -p '${{ secrets.CI_REGISTRY_PASSWORD }}'
+#          docker pull klementus/${{ env.CI_PROJECT_NAME }}:latest
+#          docker stop flask || true
+#          docker rm flask || true
+#          docker run -d -p 8080:8080 --name flask klementus/${{ env.CI_PROJECT_NAME }}:latest
+#          docker rmi -f \$(docker images -f 'dangling=true' -q)"
