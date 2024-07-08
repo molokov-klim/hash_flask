@@ -48,9 +48,9 @@ jobs:
           sshpass -p "${{ env.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ env.SSH_USER }}@${{ env.SSH_HOST }} "
           docker login -u '${{ env.CI_REGISTRY_USER }}' -p '${{ env.CI_REGISTRY_PASSWORD }}'
           docker pull klementus/${{ env.CI_PROJECT_NAME }}:latest
-          docker stop {{ env.CI_PROJECT_NAME }} || true
-          docker rm {{ env.CI_PROJECT_NAME }} || true
-          docker run -d -p 4022:4022 --name {{ env.CI_PROJECT_NAME }} klementus/${{ env.CI_PROJECT_NAME }}:latest
+          docker stop ${{ env.CI_PROJECT_NAME }} || true
+          docker rm ${{ env.CI_PROJECT_NAME }} || true
+          docker run -d -p 4022:4022 --name ${{ env.CI_PROJECT_NAME }} klementus/${{ env.CI_PROJECT_NAME }}:latest
           images=\$(docker images -f 'dangling=true' -q)
           if [ -n \"\$images\" ]; then
             docker rmi -f \$images
