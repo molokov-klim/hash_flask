@@ -11,6 +11,7 @@ env:
   SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
   CI_PROJECT_NAME: ${{ github.event.repository.name }}
   FLASK_ENV: production
+  FLASK_PORT: 4022
 
 jobs:
   build:
