@@ -51,4 +51,7 @@ jobs:
           docker stop flask || true
           docker rm flask || true
           docker run -d -p 8080:8080 --name flask klementus/${{ env.CI_PROJECT_NAME }}:latest
-          docker rmi -f \$(docker images -f 'dangling=true' -q)"
+          images=\$(docker images -f 'dangling=true' -q)
+          if [ -n \"\$images\" ]; then
+            docker rmi -f \$images
+          fi"
