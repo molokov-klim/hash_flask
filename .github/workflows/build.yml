@@ -51,7 +51,7 @@ jobs:
           docker pull ${{ env.CI_REGISTRY_USERNAME }}/${{ env.CI_PROJECT_NAME }}:latest
           docker stop ${{ env.CI_PROJECT_NAME }} || true
           docker rm ${{ env.CI_PROJECT_NAME }} || true
-          docker run -d -p -p ${{ env.FLASK_PORT }}:${{ env.FLASK_PORT }} --name ${{ env.CI_PROJECT_NAME }} -e FLASK_ENV=${{ env.FLASK_ENV }} ${{ env.CI_REGISTRY_USERNAME }}/${{ env.CI_PROJECT_NAME }}:latest
+          docker run -d -p ${{ env.FLASK_PORT }}:${{ env.FLASK_PORT }} --name ${{ env.CI_PROJECT_NAME }} -e FLASK_ENV=${{ env.FLASK_ENV }} ${{ env.CI_REGISTRY_USERNAME }}/${{ env.CI_PROJECT_NAME }}:latest
           images=\$(docker images -f 'dangling=true' -q)
           if [ -n \"\$images\" ]; then
             docker rmi -f \$images
