@@ -5,7 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 # Копируем файлы requirements.txt в контейнер
-COPY ../../requirements.txt .
+COPY requirements.txt .
 
 # Устанавливаем зависимости
 RUN pip install -r requirements.txt
