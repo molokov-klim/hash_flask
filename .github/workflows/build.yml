@@ -3,6 +3,7 @@ name: Build and Deploy
 on: [push]
 
 env:
+  # delete this
   #DOCKER_DRIVER: overlay2
   CI_REGISTRY_USERNAME: ${{ secrets.CI_REGISTRY_USERNAME }}
   CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
